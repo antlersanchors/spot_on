@@ -124,7 +124,7 @@ int evaluateMood() {
 			maxIndex = i;
 		}
 	}
-
+	// pass this to updateMusic()
 	return maxIndex;
 
 }
@@ -135,14 +135,25 @@ void updateMusic(int tempMoodSelected){
 	if (moodSelected !! moodPlaying) {
 
 		// pick a new track
-		// fade out the old one
-		for (int i = 0; i < 255; i ++){
+		// *** some bullshit code to pick a new track based on mood here
+		int trackToPlay = 1;
 
+		// fade out the old one
+		if (volume < 254 && (millis() % 10 == 0)){
+			volume ++;
+		} else if (volume == 254){
+			MP3player.stopTrack();
+			MP3player.playTrack(trackToPlay);
+			moodPlaying = moodSelected;
 		}
-		// fade in the new one
-		moodPlaying = moodSelected;
 	}
 
+	// fade in the new one
+	if (moodSelected == moodPlaying && volume > maxVolume){
+		if (volume > maxVolume && (millis() % 10 == 0)){
+			volume --;
+		}
+	}
 
 }
 
