@@ -31,8 +31,11 @@ const int sensorThreshold = 150;
 
 #define SENSOR_COUNT 6
 int sensorPins[SENSOR_COUNT] = {A0, A1, A2, A3, A4, A5};
+int sensorStatus[SENSOR_COUNT] = {0, 0, 0, 0, 0, 0};
 int ringCount[3] = {0, 0, 0};
 unsigned int ringPlaying;
+
+unsigned int lastUpdated;
 
 int currentTime;
 int previousTime;
@@ -52,12 +55,12 @@ void loop()
 	for (int i=0; i < SENSOR_COUNT; i++){
 	  sensorVal = analogRead(sensorPins[i]);
 
-	  if (sensorVal < sensorThreshold && MP3player.isPlaying(){
+	  if (sensorVal < sensorThreshold && sensorStatus[i] == 0) {
 	  	if (MP3player.isPlaying(i+1) == false){
 	  		MP3player.stopTrack();
 	  		MP3player.playTrack(i+1);
 		}
-	  } else if (sensorVal < sensorThreshold){
+	  } else if (sensorVal > sensorThreshold){
 	  	MP3player
 	  }
 
@@ -77,6 +80,23 @@ void loop()
     }
   }
 
+}
+
+// Let's check the traps!
+void checkSensors() {
+	for (int i=0; i < SENSOR_COUNT; i++){
+	  sensorVal = analogRead(sensorPins[i]);
+
+	  // If there's something present, was it there before?
+	  if (sensorVal < sensorThreshold && sensorStatus[i] == 0) {
+	  	sensorStatus[i] = 1;
+	  	lastUpdated = i;
+	  }
+
+	  if (sensorVal > sensorThreshold && sensorStatus[i] == 1){
+	  	sensorStatus[i] = 0;
+	  	lastUpdated = i;
+	  }
 
 }
 
