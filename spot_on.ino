@@ -23,18 +23,23 @@ SFEMP3Shield MP3player; // Create Mp3 library object
 uint8_t volume = 0; // MP3 Player volume 0=max, 255=lowest (off)
 const uint16_t monoMode = 1;  // Mono setting 0=off, 3=max
 
-/* Pin setup */
-
 
 // Magnet stuff
-#define hall A0
 int sensorVal;
 bool playState = false;
+const int sensorThreshold = 150;
+
+#define SENSOR_COUNT 6
+int sensorPins[SENSOR_COUNT] = {A0, A1, A2, A3, A4, A5};
+
+int currentTime;
+int previousTime;
+
+// New sound 
 
 void setup()
 {
   Serial.begin(9600);
-
 
   initSD();  // Initialize the SD card
   initMP3Player(); // Initialize the MP3 Shield
@@ -42,7 +47,19 @@ void setup()
 
 void loop()
 {
-  sensorVal = analogRead(hall);
+	for (int i=0; i < SENSOR_COUNT; i++){
+	  sensorVal = analogRead(sensorPins[i]);
+
+	  if (sensorVal < sensorThreshold && MP3player.isPlaying(){
+	  	if (MP3player.isPlaying(i+1) == false){
+	  		MP3player.stopTrack();
+	  		MP3player.playTrack(i+1);
+		}
+	  } else if (sensorVal < sensorThreshold){
+	  	MP3player
+	  }
+
+	}
   // Serial.println(sensorVal);
 
   if (sensorVal < 200){
@@ -57,13 +74,6 @@ void loop()
       MP3player.stopTrack();
     }
   }
-
-
-  Serial.print("playState: ");
-  Serial.println(playState);
-
-  Serial.print("isPlaying(): ");
-  Serial.println(MP3player.isPlaying());
 
 
 }
