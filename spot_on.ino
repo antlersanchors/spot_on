@@ -31,6 +31,8 @@ const int sensorThreshold = 150;
 
 #define SENSOR_COUNT 6
 int sensorPins[SENSOR_COUNT] = {A0, A1, A2, A3, A4, A5};
+int ringCount[3] = {0, 0, 0};
+unsigned int ringPlaying;
 
 int currentTime;
 int previousTime;
