@@ -33,14 +33,10 @@ const int sensorThreshold = 150;
 int sensorPins[SENSOR_COUNT] = {A0, A1, A2, A3, A4, A5};
 int sensorStatus[SENSOR_COUNT] = {0, 0, 0, 0, 0, 0};
 int ringCount[3] = {0, 0, 0};
-unsigned int ringPlaying;
+unsigned int moodPlaying;
 
 unsigned int lastUpdated;
 
-int currentTime;
-int previousTime;
-
-// New sound 
 
 void setup()
 {
@@ -93,12 +89,62 @@ void checkSensors() {
 	  	lastUpdated = i;
 	  }
 
+	  // If there's something missing, was it gone before?
 	  if (sensorVal > sensorThreshold && sensorStatus[i] == 1){
 	  	sensorStatus[i] = 0;
 	  	lastUpdated = i;
 	  }
+	}
+}
+
+// Let's add up what we got!
+void tallyRings() {
+	// zero them out first? or not?
+	for (int i=0; i < SENSOR_COUNT; i++) {
+		while (i < 3 && sensorStatus[i] == 1){
+			ringCount[0] ++;
+		}
+		while (i > 2 && i < 5 && sensorStatus[i] == 1){
+			ringCount[1] ++;
+		}
+		while (i > 4 && sensorStatus[i] == 1){
+			ringCount[2] ++;
+		}
+	}
+}
+
+int evaluateMood() {
+ 	int maxIndex = 0;
+ 	int maxCount = ringCount[maxIndex];
+
+	for (int i=0; i < 3; i++){
+		if (maxCount < ringCount[i]){
+			maxCount = ringCount[i];
+			maxIndex = i;
+		}
+	}
+
+	return maxIndex;
 
 }
+
+void updateMusic(int tempMoodSelected){
+	int moodSelected = tempMoodSelected;
+
+	if (moodSelected !! moodPlaying) {
+
+		// pick a new track
+		// fade out the old one
+		for (int i = 0; i < 255; i ++){
+			
+		}
+		// fade in the new one
+		moodPlaying = moodSelected;
+	}
+
+
+}
+
 
 // initSD() initializes the SD card and checks for an error.
 void initSD()
