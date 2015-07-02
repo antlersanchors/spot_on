@@ -78,40 +78,42 @@ void loop()
 
 
  checkSensors();
- tallyRings();
- int moodReturned = evaluateMood();
- updateMusic(moodReturned);
+ // tallyRings();
+ // int moodReturned = evaluateMood();
+ // updateMusic(moodReturned);
 
 }
 
 // Let's check the traps!
 void checkSensors() {
-	for (int i=0; i < SENSOR_COUNT; i++){
-	  sensorVal = analogRead(sensorPins[i]);
-	  
-	  // Serial.print(i);
-	  // Serial.print( " : ");
-	  // Serial.println(sensorVal);
+	if (millis() % 500 == 0){
+		for (int i=0; i < SENSOR_COUNT; i++){
+		  sensorVal = analogRead(sensorPins[i]);
+		  
+		  // Serial.print(i);
+		  // Serial.print( " : ");
+		  // Serial.println(sensorVal);
 
-	  // If there's something present, was it there before?
-	  if (sensorVal < sensorThreshold && sensorStatus[i] == 0) {
-	  	sensorStatus[i] = 1;
-	  	lastUpdated = i;
+		  // If there's something present, was it there before?
+		  if (sensorVal < sensorThreshold && sensorStatus[i] == 0) {
+		  	sensorStatus[i] = 1;
+		  	lastUpdated = i;
 
-	  Serial.print(i);
-	  Serial.print( " added ");
-	  Serial.println(sensorVal);
-	  }
+		  Serial.print(i);
+		  Serial.print( " added ");
+		  Serial.println(sensorVal);
+		  }
 
-	  // If there's something missing, was it gone before?
-	  if (sensorVal > sensorThreshold && sensorStatus[i] == 1){
-	  	sensorStatus[i] = 0;
-	  	lastUpdated = i;
+		  // If there's something missing, was it gone before?
+		  if (sensorVal > sensorThreshold && sensorStatus[i] == 1){
+		  	sensorStatus[i] = 0;
+		  	lastUpdated = i;
 
-	  	Serial.print(i);
-	  	Serial.print( " removed ");
-	  	Serial.println(sensorVal);
-	  }
+		  	Serial.print(i);
+		  	Serial.print( " removed ");
+		  	Serial.println(sensorVal);
+		  }
+		}
 	}
 }
 
