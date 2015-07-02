@@ -20,14 +20,14 @@ SdFat sd; // Create object to handle SD functions
 SFEMP3Shield MP3player; // Create Mp3 library object
 // These variables are used in the MP3 initialization to set up
 // some stereo options:
-const maxVolume = 10;
+const int maxVolume = 10;
 uint8_t volume = maxVolume; // MP3 Player volume 0=max, 255=lowest (off)
 const uint16_t monoMode = 1;  // Mono setting 0=off, 3=max
 
 // Magnet stuff
 int sensorVal;
 bool playState = false;
-const int sensorThreshold = 150;
+const int sensorThreshold = 90;
 
 #define SENSOR_COUNT 6
 int sensorPins[SENSOR_COUNT] = {A0, A1, A2, A3, A4, A5};
@@ -51,9 +51,10 @@ void loop()
 	  sensorVal = analogRead(sensorPins[i]);
 
 	  if (sensorVal < sensorThreshold && sensorStatus[i] == 0) {
-	  	if (MP3player.isPlaying(i+1) == false){
+	  	int nameNum = i + 1;
+	  	if (MP3player.isPlaying(nameNum) == false){
 	  		MP3player.stopTrack();
-	  		MP3player.playTrack(i+1);
+	  		MP3player.playTrack(nameNum);
 		}
 	  } else if (sensorVal > sensorThreshold){
 	  	MP3player
@@ -75,12 +76,20 @@ void loop()
     }
   }
 
+ // checkSensors();
+ // tallyRings();
+ // int moodReturned = evaluateMood();
+ // updateMusic(moodReturned);
+
 }
 
 // Let's check the traps!
 void checkSensors() {
 	for (int i=0; i < SENSOR_COUNT; i++){
 	  sensorVal = analogRead(sensorPins[i]);
+	  Serial.print(sensorPins[i]);
+	  Serial.print( " : ");
+	  Serial.println(sensorVal);
 
 	  // If there's something present, was it there before?
 	  if (sensorVal < sensorThreshold && sensorStatus[i] == 0) {
@@ -130,7 +139,7 @@ int evaluateMood() {
 void updateMusic(int tempMoodSelected){
 	int moodSelected = tempMoodSelected;
 
-	if (moodSelected !! moodPlaying) {
+	if (moodSelected != moodPlaying) {
 
 		// pick a new track
 		// *** some bullshit code to pick a new track based on mood here
