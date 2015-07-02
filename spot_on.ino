@@ -35,6 +35,8 @@ int sensorStatus[SENSOR_COUNT] = {0, 0, 0, 0, 0, 0};
 int ringCount[3] = {0, 0, 0};
 unsigned int moodPlaying;
 
+unsigned int sensorPlaying;
+
 unsigned int lastUpdated;
 
 void setup()
@@ -53,9 +55,11 @@ void loop()
 	  if (sensorVal < sensorThreshold && sensorStatus[i] == 0) {
 	  	int nameNum = i + 1;
 	  	sensorStatus[i]=1;
+	  	
+
 	  	if (MP3player.isPlaying() == false){
 	  		MP3player.stopTrack();
-	  		MP3player.playTrack(1);
+	  		MP3player.playTrack(i);
 		}
 	  } else if (sensorVal > sensorThreshold){
 
