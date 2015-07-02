@@ -24,7 +24,6 @@ const maxVolume = 10;
 uint8_t volume = maxVolume; // MP3 Player volume 0=max, 255=lowest (off)
 const uint16_t monoMode = 1;  // Mono setting 0=off, 3=max
 
-
 // Magnet stuff
 int sensorVal;
 bool playState = false;
@@ -37,7 +36,6 @@ int ringCount[3] = {0, 0, 0};
 unsigned int moodPlaying;
 
 unsigned int lastUpdated;
-
 
 void setup()
 {
@@ -156,7 +154,6 @@ void updateMusic(int tempMoodSelected){
 	}
 
 }
-
 
 // initSD() initializes the SD card and checks for an error.
 void initSD()
