@@ -55,11 +55,14 @@ void loop()
 	  if (sensorVal < sensorThreshold && sensorStatus[i] == 0) {
 	  	int nameNum = i + 1;
 	  	sensorStatus[i]=1;
-	  	
+
+	  	Serial.print(i);
+	  	Serial.print(" : ");
+	  	Serial.println(sensorStatus[i]);
 
 	  	if (MP3player.isPlaying() == false){
 	  		MP3player.stopTrack();
-	  		MP3player.playTrack(i);
+	  		MP3player.playTrack(nameNum);
 		}
 	  } else if (sensorVal > sensorThreshold){
 
