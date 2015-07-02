@@ -30,9 +30,10 @@ bool playState = false;
 const int sensorThreshold = 90;
 
 #define SENSOR_COUNT 6
+#define RING_COUNT 3
 int sensorPins[SENSOR_COUNT] = {A0, A1, A2, A3, A4, A5};
 int sensorStatus[SENSOR_COUNT] = {0, 0, 0, 0, 0, 0};
-int ringCount[3] = {0, 0, 0};
+int ringTotals[3] = {0, 0, 0};
 unsigned int moodPlaying;
 
 unsigned int sensorPlaying;
@@ -49,49 +50,37 @@ void setup()
 
 void loop()
 {
-	for (int i=0; i < SENSOR_COUNT; i++){
-	  sensorVal = analogRead(sensorPins[i]);
+	// for (int i=0; i < SENSOR_COUNT; i++){
+	//   sensorVal = analogRead(sensorPins[i]);
 
-	  if (sensorVal < sensorThreshold && sensorStatus[i] == 0) {
-	  	int nameNum = i + 1;
-	  	sensorStatus[i]=1;
+	//   if (sensorVal < sensorThreshold && sensorStatus[i] == 0) {
+	//   	int nameNum = i + 1;
+	//   	sensorStatus[i]=1;
 
-	  	Serial.print(i);
-	  	Serial.print(" : ");
-	  	Serial.println(sensorStatus[i]);
+	//   	Serial.print(i);
+	//   	Serial.print(" : ");
+	//   	Serial.println(sensorStatus[i]);
 
-	  	if (MP3player.isPlaying() == false){
-	  		MP3player.stopTrack();
-	  		MP3player.playTrack(nameNum);
-		}
-	  } else if (sensorVal > sensorThreshold){
+	//   	if (MP3player.isPlaying() == false){
+	//   		MP3player.stopTrack();
+	//   		MP3player.playTrack(nameNum);
+	// 	}
+	//   } else if (sensorVal > sensorThreshold){
 
-	  	if (sensorStatus[i] == 1){
-	  		MP3player.stopTrack();
-	  		sensorStatus[i]=0;
-	  	}
-	  }
+	//   	if (sensorStatus[i] == 1){
+	//   		MP3player.stopTrack();
+	//   		sensorStatus[i]=0;
+	//   	}
+	//   }
 
-	}
-  Serial.println(sensorVal);
+	// }
+ //  Serial.println(sensorVal);
 
-  // if (sensorVal < 200){
-  //   playState = true;
 
-  //   if (MP3player.isPlaying() == false){
-  //     uint8_t result = MP3player.playTrack(1);
-  //   }
-  // } else {
-  //   playState = false;
-  //   if (MP3player.isPlaying()){
-  //     MP3player.stopTrack();
-  //   }
-  // }
-
- // checkSensors();
- // tallyRings();
- // int moodReturned = evaluateMood();
- // updateMusic(moodReturned);
+ checkSensors();
+ tallyRings();
+ int moodReturned = evaluateMood();
+ updateMusic(moodReturned);
 
 }
 
@@ -120,26 +109,30 @@ void checkSensors() {
 // Let's add up what we got!
 void tallyRings() {
 	// zero them out first? or not?
+	for (int j=0; j < RING_COUNT; j++){
+		ringTotals[j] = 0;
+	}
+
 	for (int i=0; i < SENSOR_COUNT; i++) {
 		while (i < 3 && sensorStatus[i] == 1){
-			ringCount[0] ++;
+			ringTotals[0] ++;
 		}
 		while (i > 2 && i < 5 && sensorStatus[i] == 1){
-			ringCount[1] ++;
+			ringTotals[1] ++;
 		}
 		while (i > 4 && sensorStatus[i] == 1){
-			ringCount[2] ++;
+			ringTotals[2] ++;
 		}
 	}
 }
 
 int evaluateMood() {
  	int maxIndex = 0;
- 	int maxCount = ringCount[maxIndex];
+ 	int maxCount = ringTotals[maxIndex];
 
 	for (int i=0; i < 3; i++){
-		if (maxCount < ringCount[i]){
-			maxCount = ringCount[i];
+		if (maxCount < ringTotals[i]){
+			maxCount = ringTotals[i];
 			maxIndex = i;
 		}
 	}
@@ -155,7 +148,7 @@ void updateMusic(int tempMoodSelected){
 
 		// pick a new track
 		// *** some bullshit code to pick a new track based on mood here
-		int trackToPlay = 1;
+		int trackToPlay = moodSelected;
 
 		// fade out the old one
 		if (volume < 254 && (millis() % 10 == 0)){
