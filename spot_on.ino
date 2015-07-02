@@ -52,29 +52,34 @@ void loop()
 
 	  if (sensorVal < sensorThreshold && sensorStatus[i] == 0) {
 	  	int nameNum = i + 1;
-	  	if (MP3player.isPlaying(nameNum) == false){
+	  	sensorStatus[i]=1;
+	  	if (MP3player.isPlaying() == false){
 	  		MP3player.stopTrack();
-	  		MP3player.playTrack(nameNum);
+	  		MP3player.playTrack(1);
 		}
 	  } else if (sensorVal > sensorThreshold){
-	  	MP3player
+
+	  	if (sensorStatus[i] == 1){
+	  		MP3player.stopTrack();
+	  		sensorStatus[i]=0;
+	  	}
 	  }
 
 	}
-  // Serial.println(sensorVal);
+  Serial.println(sensorVal);
 
-  if (sensorVal < 200){
-    playState = true;
+  // if (sensorVal < 200){
+  //   playState = true;
 
-    if (MP3player.isPlaying() == false){
-      uint8_t result = MP3player.playTrack(1);
-    }
-  } else {
-    playState = false;
-    if (MP3player.isPlaying()){
-      MP3player.stopTrack();
-    }
-  }
+  //   if (MP3player.isPlaying() == false){
+  //     uint8_t result = MP3player.playTrack(1);
+  //   }
+  // } else {
+  //   playState = false;
+  //   if (MP3player.isPlaying()){
+  //     MP3player.stopTrack();
+  //   }
+  // }
 
  // checkSensors();
  // tallyRings();
