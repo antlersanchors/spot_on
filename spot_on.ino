@@ -27,7 +27,7 @@ const uint16_t monoMode = 1;  // Mono setting 0=off, 3=max
 // Magnet stuff
 int sensorVal;
 bool playState = false;
-const int sensorThreshold = 90;
+const int sensorThreshold = 70;
 
 #define SENSOR_COUNT 6
 #define RING_COUNT 3
@@ -88,20 +88,29 @@ void loop()
 void checkSensors() {
 	for (int i=0; i < SENSOR_COUNT; i++){
 	  sensorVal = analogRead(sensorPins[i]);
-	  Serial.print(sensorPins[i]);
-	  Serial.print( " : ");
-	  Serial.println(sensorVal);
+	  
+	  // Serial.print(i);
+	  // Serial.print( " : ");
+	  // Serial.println(sensorVal);
 
 	  // If there's something present, was it there before?
 	  if (sensorVal < sensorThreshold && sensorStatus[i] == 0) {
 	  	sensorStatus[i] = 1;
 	  	lastUpdated = i;
+
+	  Serial.print(i);
+	  Serial.print( " added ");
+	  Serial.println(sensorVal);
 	  }
 
 	  // If there's something missing, was it gone before?
 	  if (sensorVal > sensorThreshold && sensorStatus[i] == 1){
 	  	sensorStatus[i] = 0;
 	  	lastUpdated = i;
+
+	  	Serial.print(i);
+	  	Serial.print( " removed ");
+	  	Serial.println(sensorVal);
 	  }
 	}
 }
