@@ -153,6 +153,7 @@ void updateMusic(int tempMoodSelected){
 		// fade out the old one
 		if (volume < 254 && (millis() % 10 == 0)){
 			volume ++;
+			MP3player.setVolume(volume, volume);
 		} else if (volume == 254){
 			MP3player.stopTrack();
 			MP3player.playTrack(trackToPlay);
@@ -164,6 +165,7 @@ void updateMusic(int tempMoodSelected){
 	if (moodSelected == moodPlaying && volume > maxVolume){
 		if (volume > maxVolume && (millis() % 10 == 0)){
 			volume --;
+			MP3player.setVolume(volume, volume);
 		}
 	}
 
