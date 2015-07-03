@@ -35,6 +35,7 @@ int sensorPins[SENSOR_COUNT] = {A0, A1, A2, A3, A4, A5};
 int sensorStatus[SENSOR_COUNT] = {0, 0, 0, 0, 0, 0};
 int ringTotals[3] = {0, 0, 0};
 unsigned int moodPlaying;
+unsigned int moodReturned;
 
 unsigned int sensorPlaying;
 
@@ -80,7 +81,8 @@ void loop()
  checkSensors();
  // tallyRings();
  // int moodReturned = evaluateMood();
- // updateMusic(moodReturned);
+ 
+ updateMusic(moodReturned);
 
 }
 
@@ -103,6 +105,9 @@ void checkSensors() {
 		  Serial.print(i);
 		  Serial.print( " added ");
 		  Serial.println(sensorVal);
+
+		  // for debugging
+		  moodReturned = int(random(0, 3));
 		  }
 
 		  // If there's something missing, was it gone before?
@@ -113,6 +118,9 @@ void checkSensors() {
 		  	Serial.print(i);
 		  	Serial.print( " removed ");
 		  	Serial.println(sensorVal);
+
+		  	// for debugging
+		  	moodReturned = int(random(0, 3));
 		  }
 		}
 	}
@@ -176,11 +184,10 @@ int evaluateMood() {
 	// pass this to updateMusic()
 	return maxIndex;
 
-
 }
 
 void updateMusic(int tempMoodSelected){
-	int moodSelected = tempMoodSelected;
+	int moodSelected = tempMoodSelected + 1;
 
 	if (moodSelected != moodPlaying) {
 
