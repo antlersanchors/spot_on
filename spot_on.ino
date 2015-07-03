@@ -27,7 +27,7 @@ const uint16_t monoMode = 1;  // Mono setting 0=off, 3=max
 // Magnet stuff
 int sensorVal;
 bool playState = false;
-const int sensorThreshold = 70;
+const int sensorThreshold = 100;
 
 #define SENSOR_COUNT 6
 #define RING_COUNT 3
@@ -86,13 +86,14 @@ void loop()
 
 // Let's check the traps!
 void checkSensors() {
+	// 
 	if (millis() % 500 == 0){
 		for (int i=0; i < SENSOR_COUNT; i++){
 		  sensorVal = analogRead(sensorPins[i]);
 		  
-		  // Serial.print(i);
-		  // Serial.print( " : ");
-		  // Serial.println(sensorVal);
+		  Serial.print(i);
+		  Serial.print( " : ");
+		  Serial.println(sensorVal);
 
 		  // If there's something present, was it there before?
 		  if (sensorVal < sensorThreshold && sensorStatus[i] == 0) {
@@ -125,30 +126,56 @@ void tallyRings() {
 	}
 
 	for (int i=0; i < SENSOR_COUNT; i++) {
-		while (i < 3 && sensorStatus[i] == 1){
+		if (i < 3 && sensorStatus[i] == 1){
 			ringTotals[0] ++;
+
+			if (millis() % 2000 == 0){
+			  	Serial.print("ring 0 total");
+			  	Serial.println(ringTotals[i]);
+			}
 		}
-		while (i > 2 && i < 5 && sensorStatus[i] == 1){
+		if (i > 2 && i < 5 && sensorStatus[i] == 1){
 			ringTotals[1] ++;
+
+			if (millis() % 2000 == 0){
+			  	Serial.print("ring 1 total");
+			  	Serial.println(ringTotals[i]);
+			}
 		}
-		while (i > 4 && sensorStatus[i] == 1){
+		if (i > 4 && sensorStatus[i] == 1){
 			ringTotals[2] ++;
+
+			if (millis() % 2000 == 0){
+			  	Serial.print("ring 2 total");
+			  	Serial.println(ringTotals[i]);
+			}
 		}
 	}
+
+	// if (millis() % 1000 == 0){
+	//   	Serial.print("ring 1 total");
+	//   	Serial.println(ringTotals[i]);
+	// }
 }
 
 int evaluateMood() {
  	int maxIndex = 0;
  	int maxCount = ringTotals[maxIndex];
 
-	for (int i=0; i < 3; i++){
+	for (int i=0; i < RING_COUNT; i++){
 		if (maxCount < ringTotals[i]){
 			maxCount = ringTotals[i];
 			maxIndex = i;
 		}
 	}
+
+	// if(millis() % 1000 == 0){
+	// 	Serial.print("maxIndex: ")
+	// 	Serial.println(maxIndex);
+	// }
 	// pass this to updateMusic()
 	return maxIndex;
+
 
 }
 
