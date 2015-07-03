@@ -27,7 +27,7 @@ const uint16_t monoMode = 1;  // Mono setting 0=off, 3=max
 // Magnet stuff
 int sensorVal;
 bool playState = false;
-const int sensorThreshold = 100;
+const int sensorThreshold = 130;
 
 #define SENSOR_COUNT 6
 #define RING_COUNT 3
