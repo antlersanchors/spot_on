@@ -42,6 +42,7 @@ unsigned int moodReturned;
 //for demo mode
 #define SENSOR_1 11
 #define SENSOR_2 12
+#define SENSOR_3 13
 
 
 unsigned int sensorPlaying;
@@ -88,7 +89,7 @@ void checkSensors() {
 		  Serial.println(sensorVal);
 
 		  // for debugging
-		  moodReturned = int(random(0, 3));
+		  // moodReturned = int(random(0, 3));
 		  }
 
 		  // If there's something missing, was it gone before?
@@ -101,7 +102,7 @@ void checkSensors() {
 		  	Serial.println(sensorVal);
 
 		  	// for debugging
-		  	moodReturned = int(random(0, 3));
+		  	// moodReturned = int(random(0, 3));
 		  }
 		}
 	}
@@ -168,6 +169,22 @@ int evaluateMood() {
 }
 
 int demoMode(){
+	int demoSong;
+
+	if (millis() % 500 == 0){
+	
+		if (SENSOR_1 == 0) {
+			if (SENSOR_2 == 1){
+				demoSong = 0;
+			} else if (SENSOR_2 == 0) {
+				demoSong = 2;
+			}
+		} else if (SENSOR_2 == 0 && SENSOR_1 == 1){
+			demoSong = 1;
+		}
+	}
+
+	return demoSong;
 
 }
 
