@@ -172,16 +172,22 @@ int demoMode(){
 	int demoSong;
 
 	if (millis() % 500 == 0){
-	
-		if (SENSOR_1 == 0) {
-			if (SENSOR_2 == 1){
+		
+		if (digitalRead(SENSOR_1) == 0) { // if ball at SENSOR_1
+
+			if (digitalRead(SENSOR_2) == 1){ // but not at SENSOR_2
 				demoSong = 0;
-			} else if (SENSOR_2 == 0) {
+
+			} else if (digitalRead(SENSOR_2) == 0) { // ball at both
 				demoSong = 2;
+
 			}
-		} else if (SENSOR_2 == 0 && SENSOR_1 == 1){
+
+		} else if (digitalRead(SENSOR_2) == 0 && digitalRead(SENSOR_1) == 1){ // ball just at SENSOR_2
 			demoSong = 1;
+
 		}
+
 	}
 
 	return demoSong;
