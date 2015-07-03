@@ -54,32 +54,6 @@ void setup()
 
 void loop()
 {
-	// for (int i=0; i < SENSOR_COUNT; i++){
-	//   sensorVal = analogRead(sensorPins[i]);
-
-	//   if (sensorVal < sensorThreshold && sensorStatus[i] == 0) {
-	//   	int nameNum = i + 1;
-	//   	sensorStatus[i]=1;
-
-	//   	Serial.print(i);
-	//   	Serial.print(" : ");
-	//   	Serial.println(sensorStatus[i]);
-
-	//   	if (MP3player.isPlaying() == false){
-	//   		MP3player.stopTrack();
-	//   		MP3player.playTrack(nameNum);
-	// 	}
-	//   } else if (sensorVal > sensorThreshold){
-
-	//   	if (sensorStatus[i] == 1){
-	//   		MP3player.stopTrack();
-	//   		sensorStatus[i]=0;
-	//   	}
-	//   }
-
-	// }
- //  Serial.println(sensorVal);
-
 
  checkSensors();
  // tallyRings();
