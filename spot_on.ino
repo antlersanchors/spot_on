@@ -199,10 +199,10 @@ void updateMusic(int tempMoodSelected){
 		int trackToPlay = moodSelected;
 
 		// fade out the old one
-		if (volume < 254 && (millis() % FADE_RATE == 0)){
+		if (volume < 240 && (millis() % FADE_RATE == 0)){
 			volume ++;
 			MP3player.setVolume(volume, volume);
-		} else if (volume == 254){
+		} else if (volume == 240){
 			MP3player.stopTrack();
 			MP3player.playTrack(trackToPlay);
 			moodPlaying = moodSelected;
