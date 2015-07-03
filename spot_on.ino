@@ -39,6 +39,10 @@ unsigned int moodReturned;
 
 #define FADE_RATE 5
 
+//for demo mode
+#define SENSOR_1 11
+#define SENSOR_2 12
+
 
 unsigned int sensorPlaying;
 
@@ -68,14 +72,14 @@ void checkSensors() {
 	// 
 	if (millis() % 500 == 0){
 		for (int i=0; i < SENSOR_COUNT; i++){
-		  sensorVal = analogRead(sensorPins[i]);
+		  sensorVal = digitalRead(sensorPins[i]);
 		  
 		  Serial.print(i);
 		  Serial.print( " : ");
 		  Serial.println(sensorVal);
 
 		  // If there's something present, was it there before?
-		  if (sensorVal < sensorThreshold && sensorStatus[i] == 0) {
+		  if (sensorVal == 0 && sensorStatus[i] == 0) {
 		  	sensorStatus[i] = 1;
 		  	lastUpdated = i;
 
@@ -88,7 +92,7 @@ void checkSensors() {
 		  }
 
 		  // If there's something missing, was it gone before?
-		  if (sensorVal > sensorThreshold && sensorStatus[i] == 1){
+		  if (sensorVal == 1 && sensorStatus[i] == 1){
 		  	sensorStatus[i] = 0;
 		  	lastUpdated = i;
 
@@ -160,6 +164,10 @@ int evaluateMood() {
 	// }
 	// pass this to updateMusic()
 	return maxIndex;
+
+}
+
+int demoMode(){
 
 }
 
