@@ -29,19 +29,18 @@ int sensorVal;
 bool playState = false;
 const int sensorThreshold = 130;
 
-#define SENSOR_COUNT 6
-#define RING_COUNT 3
-int sensorPins[SENSOR_COUNT] = {A0, A1, A2, A3, A4, A5};
-int sensorStatus[SENSOR_COUNT] = {0, 0, 0, 0, 0, 0};
-int ringTotals[3] = {0, 0, 0};
+#define SENSOR_COUNT 12
+#define RING_COUNT 4
+int sensorPins[SENSOR_COUNT] = {A0, A1, A2, A3, A4, A5, A8, A9, A10, A11, A12, A13};
+int sensorStatus[SENSOR_COUNT] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+int ringTotals[4] = {0, 0, 0, 0};
+
 unsigned int moodPlaying;
 unsigned int moodReturned;
 
 #define FADE_RATE 5
 
-
 unsigned int sensorPlaying;
-
 unsigned int lastUpdated;
 
 void setup()
@@ -59,7 +58,7 @@ void loop()
  // tallyRings();
  // int moodReturned = evaluateMood();
  
- updateMusic(moodReturned);
+ // updateMusic(moodReturned);
 
 }
 
@@ -74,7 +73,7 @@ void checkSensors() {
 		  Serial.print( " : ");
 		  Serial.println(sensorVal);
 
-		  // If there's something present, was it there before?
+		  // If there's something present, and it wasn't there before
 		  if (sensorVal < sensorThreshold && sensorStatus[i] == 0) {
 		  	sensorStatus[i] = 1;
 		  	lastUpdated = i;
@@ -116,31 +115,35 @@ void tallyRings() {
 
 			if (millis() % 2000 == 0){
 			  	Serial.print("ring 0 total");
-			  	Serial.println(ringTotals[i]);
+			  	Serial.println(ringTotals[0]);
 			}
 		}
-		if (i > 2 && i < 5 && sensorStatus[i] == 1){
+		if (i > 2 && i < 6 && sensorStatus[i] == 1){
 			ringTotals[1] ++;
 
 			if (millis() % 2000 == 0){
 			  	Serial.print("ring 1 total");
-			  	Serial.println(ringTotals[i]);
+			  	Serial.println(ringTotals[1]);
 			}
 		}
-		if (i > 4 && sensorStatus[i] == 1){
+		if (i > 7 && i < 11 sensorStatus[i] == 1){
 			ringTotals[2] ++;
 
 			if (millis() % 2000 == 0){
 			  	Serial.print("ring 2 total");
-			  	Serial.println(ringTotals[i]);
+			  	Serial.println(ringTotals[2]);
+			}
+
+		if (i > 10 && i < 14 sensorStatus[i] == 1){
+			ringTotals[3] ++;
+
+			if (millis() % 2000 == 0){
+			  	Serial.print("ring 3 total");
+			  	Serial.println(ringTotals[3]);
 			}
 		}
 	}
 
-	// if (millis() % 1000 == 0){
-	//   	Serial.print("ring 1 total");
-	//   	Serial.println(ringTotals[i]);
-	// }
 }
 
 int evaluateMood() {
