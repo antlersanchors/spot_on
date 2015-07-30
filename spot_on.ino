@@ -168,7 +168,7 @@ int evaluateMood() {
 }
 
 void updateMusic(int tempMoodSelected){
-	int moodSelected = tempMoodSelected + 1;
+	int moodSelected = tempMoodSelected;
 
 	if (moodSelected != moodPlaying) {
 
@@ -177,12 +177,16 @@ void updateMusic(int tempMoodSelected){
 
 		switch (moodSelected) {
 		    case 0:
+		    	trackToPlay = random(1, 5);
 		      break;
 		    case 1:
+		    	trackToPlay = random(10, 14);
 		    	break;
 	    	case 2:
+	    		trackToPlay = random(20,24);
 	    		break;
     		case 3:
+    			trackToPlay = random(30,34);
     			break;
 		}
 		// fade out the old one
