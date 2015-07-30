@@ -43,7 +43,8 @@ unsigned int moodReturned;
 unsigned int sensorPlaying;
 unsigned int lastUpdated;
 
-
+// for to make playMP3 work
+char trackName[] = "track001.mp3";
 
 
 void setup()
@@ -170,30 +171,39 @@ int evaluateMood() {
 }
 
 void updateMusic(int tempMoodSelected){
-	// for to make playMP3 work
-	char trackName[] = "track001.mp3";
 	int moodSelected = tempMoodSelected;
 	int trackToPlay;
-	
+	String trackName;
+
 	if (moodSelected != moodPlaying) {
 
 		// pick a new track
+		// *** some bullshit code to pick a new track based on mood here
+
 		switch (moodSelected) {
 		    case 0:
 		    	trackToPlay = random(1, 5);
-		    	sprintf(trackName, "track%03d.mp3", trackToPlay);
-		    	break;
+		    	trackName = "track00";
+			  	trackName.concat(trackToPlay);
+			  	trackName.concat(".mp3");
+		      break;
 		    case 1:
 		    	trackToPlay = random(10, 14);
-		    	sprintf(trackName, "track%03d.mp3", trackToPlay);
+		    	trackName = "track0";
+			  	trackName.concat(trackToPlay);
+			  	trackName.concat(".mp3");
 		    	break;
 	    	case 2:
 	    		trackToPlay = random(20,24);
-	    		sprintf(trackName, "track%03d.mp3", trackToPlay);
+	    		trackName = "track0";
+			  	trackName.concat(trackToPlay);
+			  	trackName.concat(".mp3");
 	    		break;
     		case 3:
     			trackToPlay = random(30,34);
-    			sprintf(trackName, "track%03d.mp3", trackToPlay);
+    			trackName = "track0";
+			  	trackName.concat(trackToPlay);
+			  	trackName.concat(".mp3");
     			break;
 		}
 		// fade out the old one
