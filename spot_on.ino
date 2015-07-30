@@ -38,13 +38,10 @@ int ringTotals[4] = {0, 0, 0, 0};
 unsigned int moodPlaying;
 unsigned int moodReturned;
 
-#define FADE_RATE 4
+#define FADE_RATE 5
 
 unsigned int sensorPlaying;
 unsigned int lastUpdated;
-
-// for to make playMP3 work
-char trackName[] = "track001.mp3";
 
 
 void setup()
@@ -172,8 +169,6 @@ int evaluateMood() {
 
 void updateMusic(int tempMoodSelected){
 	int moodSelected = tempMoodSelected;
-	int trackToPlay;
-	String trackName;
 
 	if (moodSelected != moodPlaying) {
 
@@ -183,27 +178,15 @@ void updateMusic(int tempMoodSelected){
 		switch (moodSelected) {
 		    case 0:
 		    	trackToPlay = random(1, 5);
-		    	trackName = "track00";
-			  	trackName.concat(trackToPlay);
-			  	trackName.concat(".mp3");
 		      break;
 		    case 1:
 		    	trackToPlay = random(10, 14);
-		    	trackName = "track0";
-			  	trackName.concat(trackToPlay);
-			  	trackName.concat(".mp3");
 		    	break;
 	    	case 2:
 	    		trackToPlay = random(20,24);
-	    		trackName = "track0";
-			  	trackName.concat(trackToPlay);
-			  	trackName.concat(".mp3");
 	    		break;
     		case 3:
     			trackToPlay = random(30,34);
-    			trackName = "track0";
-			  	trackName.concat(trackToPlay);
-			  	trackName.concat(".mp3");
     			break;
 		}
 		// fade out the old one
@@ -212,7 +195,7 @@ void updateMusic(int tempMoodSelected){
 			MP3player.setVolume(volume, volume);
 		} else if (volume == 240){
 			MP3player.stopTrack();
-			MP3player.playMP3(trackName);
+			MP3player.playTrack(trackToPlay);
 			moodPlaying = moodSelected;
 		}
 	}
