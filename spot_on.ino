@@ -38,7 +38,7 @@ int ringTotals[4] = {0, 0, 0, 0};
 unsigned int moodPlaying;
 unsigned int moodReturned;
 
-#define FADE_RATE 3
+#define FADE_RATE 5
 
 unsigned int sensorPlaying;
 unsigned int lastUpdated;
@@ -169,7 +169,6 @@ int evaluateMood() {
 
 void updateMusic(int tempMoodSelected){
 	int moodSelected = tempMoodSelected;
-	int trackToPlay;
 
 	if (moodSelected != moodPlaying) {
 
