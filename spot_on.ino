@@ -37,6 +37,7 @@ int ringTotals[4] = {0, 0, 0, 0};
 
 unsigned int moodPlaying;
 unsigned int moodReturned;
+unsigned int moodSelected;
 
 #define FADE_RATE 4
 
@@ -172,7 +173,7 @@ int evaluateMood() {
 }
 
 void updateMusic(int tempMoodSelected){
-	int moodSelected = tempMoodSelected;
+	moodSelected = tempMoodSelected;
 	int trackToPlay;
 
 	if (moodSelected != moodPlaying && trackSelected == false) {
@@ -214,7 +215,7 @@ void updateMusic(int tempMoodSelected){
 			MP3player.setVolume(volume, volume);
 		} else if (volume == 240){
 			MP3player.stopTrack();
-			MP3player.playTrack(trackToPlay);
+			MP3player.playMP3("track033.mp3");
 			moodPlaying = moodSelected;
 			trackSelected = false;
 		}
