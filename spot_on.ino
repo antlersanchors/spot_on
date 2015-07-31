@@ -20,7 +20,7 @@ SdFat sd; // Create object to handle SD functions
 SFEMP3Shield MP3player; // Create Mp3 library object
 // These variables are used in the MP3 initialization to set up
 // some stereo options:
-const int maxVolume = 30;
+const int maxVolume = 5;
 uint8_t volume = maxVolume; // MP3 Player volume 0=max, 255=lowest (off)
 const uint16_t monoMode = 1;  // Mono setting 0=off, 3=max
 
