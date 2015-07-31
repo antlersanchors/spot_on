@@ -37,14 +37,11 @@ int ringTotals[4] = {0, 0, 0, 0};
 
 unsigned int moodPlaying;
 unsigned int moodReturned;
-unsigned int moodSelected;
 
-#define FADE_RATE 4
+#define FADE_RATE 3
 
 unsigned int sensorPlaying;
 unsigned int lastUpdated;
-
-bool trackSelected;
 
 
 void setup()
@@ -53,8 +50,6 @@ void setup()
 
   initSD();  // Initialize the SD card
   initMP3Player(); // Initialize the MP3 Shield
-
-  trackSelected = false;
 }
 
 void loop()
@@ -89,7 +84,7 @@ void checkSensors() {
 		  Serial.println(sensorVal);
 
 		  // for debugging
-		  // moodReturned = int(random(0, 3));
+		  moodReturned = int(random(0, 3));
 		  }
 
 		  // If there's something missing, was it gone before?
@@ -102,7 +97,7 @@ void checkSensors() {
 		  	Serial.println(sensorVal);
 
 		  	// for debugging
-		  	// moodReturned = int(random(0, 3));
+		  	moodReturned = int(random(0, 3));
 		  }
 		}
 	}
@@ -173,10 +168,10 @@ int evaluateMood() {
 }
 
 void updateMusic(int tempMoodSelected){
-	moodSelected = tempMoodSelected;
+	int moodSelected = tempMoodSelected;
 	int trackToPlay;
 
-	if (moodSelected != moodPlaying && trackSelected == false) {
+	if (moodSelected != moodPlaying) {
 
 		// pick a new track
 		// *** some bullshit code to pick a new track based on mood here
@@ -184,29 +179,15 @@ void updateMusic(int tempMoodSelected){
 		switch (moodSelected) {
 		    case 0:
 		    	trackToPlay = random(1, 5);
-		    	trackSelected = true;
-		    	Serial.println(trackToPlay);
 		      break;
 		    case 1:
 		    	trackToPlay = random(10, 14);
-		    	trackSelected = true;
-
-		    	Serial.println(trackToPlay);
-
 		    	break;
 	    	case 2:
 	    		trackToPlay = random(20,24);
-	    		trackSelected = true;
-
-	    		Serial.println(trackToPlay);
-
 	    		break;
     		case 3:
     			trackToPlay = random(30,34);
-    			trackSelected = true;
-
-    			Serial.println(trackToPlay);
-
     			break;
 		}
 		// fade out the old one
@@ -215,9 +196,8 @@ void updateMusic(int tempMoodSelected){
 			MP3player.setVolume(volume, volume);
 		} else if (volume == 240){
 			MP3player.stopTrack();
-			MP3player.playMP3("track033.mp3");
+			MP3player.playTrack(trackToPlay);
 			moodPlaying = moodSelected;
-			trackSelected = false;
 		}
 	}
 
