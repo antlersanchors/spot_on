@@ -38,7 +38,7 @@ int ringTotals[4] = {0, 0, 0, 0};
 unsigned int moodPlaying;
 unsigned int moodReturned;
 
-#define FADE_RATE 5
+#define FADE_RATE 2
 
 unsigned int sensorPlaying;
 unsigned int lastUpdated;
@@ -79,9 +79,9 @@ void checkSensors() {
 		  	sensorStatus[i] = 1;
 		  	lastUpdated = i;
 
-		  Serial.print(i);
-		  Serial.print( " added ");
-		  Serial.println(sensorVal);
+		  // Serial.print(i);
+		  // Serial.print( " added ");
+		  // Serial.println(sensorVal);
 
 		  // for debugging
 		  // moodReturned = int(random(0, 3));
@@ -92,9 +92,9 @@ void checkSensors() {
 		  	sensorStatus[i] = 0;
 		  	lastUpdated = i;
 
-		  	Serial.print(i);
-		  	Serial.print( " removed ");
-		  	Serial.println(sensorVal);
+		  	// Serial.print(i);
+		  	// Serial.print( " removed ");
+		  	// Serial.println(sensorVal);
 
 		  	// for debugging
 		  	// moodReturned = int(random(0, 3));
@@ -115,24 +115,24 @@ void tallyRings() {
 			ringTotals[0] ++;
 
 			if (millis() % 2000 == 0){
-			  	Serial.print("ring 0 total");
-			  	Serial.println(ringTotals[0]);
+			  	// Serial.print("ring 0 total");
+			  	// Serial.println(ringTotals[0]);
 			}
 		}
 		if (i > 2 && i < 6 && sensorStatus[i] == 1){
 			ringTotals[1] ++;
 
 			if (millis() % 2000 == 0){
-			  	Serial.print("ring 1 total");
-			  	Serial.println(ringTotals[1]);
+			  	// Serial.print("ring 1 total");
+			  	// Serial.println(ringTotals[1]);
 			}
 		}
 		if (i > 7 && i < 11 && sensorStatus[i] == 1){
 			ringTotals[2] ++;
 
 			if (millis() % 2000 == 0){
-			  	Serial.print("ring 2 total");
-			  	Serial.println(ringTotals[2]);
+			  	// Serial.print("ring 2 total");
+			  	// Serial.println(ringTotals[2]);
 			}
 		}
 
@@ -140,8 +140,8 @@ void tallyRings() {
 			ringTotals[3] ++;
 
 			if (millis() % 2000 == 0){
-			  	Serial.print("ring 3 total");
-			  	Serial.println(ringTotals[3]);
+			  	// Serial.print("ring 3 total");
+			  	// Serial.println(ringTotals[3]);
 			}
 		}
 	}
