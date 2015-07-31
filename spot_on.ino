@@ -158,10 +158,6 @@ int evaluateMood() {
 		}
 	}
 
-	// if(millis() % 1000 == 0){
-	// 	Serial.print("maxIndex: ")
-	// 	Serial.println(maxIndex);
-	// }
 	// pass this to updateMusic()
 	return maxIndex;
 
@@ -174,7 +170,6 @@ void updateMusic(int tempMoodSelected){
 	if (moodSelected != moodPlaying) {
 
 		// pick a new track
-		// *** some bullshit code to pick a new track based on mood here
 
 		switch (moodSelected) {
 		    case 0:
