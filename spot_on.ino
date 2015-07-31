@@ -37,13 +37,11 @@ int ringTotals[4] = {0, 0, 0, 0};
 
 unsigned int moodPlaying;
 unsigned int moodReturned;
-bool trackSelected;
 
 #define FADE_RATE 5
 
 unsigned int sensorPlaying;
 unsigned int lastUpdated;
-
 
 void setup()
 {
@@ -51,18 +49,16 @@ void setup()
 
   initSD();  // Initialize the SD card
   initMP3Player(); // Initialize the MP3 Shield
-
-  trackSelected = false;
 }
 
 void loop()
 {
 
  checkSensors();
- tallyRings();
- int moodReturned = evaluateMood();
+ // tallyRings();
+ // int moodReturned = evaluateMood();
  
- updateMusic(moodReturned);
+ // updateMusic(moodReturned);
 
 }
 
@@ -73,9 +69,9 @@ void checkSensors() {
 		for (int i=0; i < SENSOR_COUNT; i++){
 		  sensorVal = analogRead(sensorPins[i]);
 		  
-		  // Serial.print(i);
-		  // Serial.print( " : ");
-		  // Serial.println(sensorVal);
+		  Serial.print(i);
+		  Serial.print( " : ");
+		  Serial.println(sensorVal);
 
 		  // If there's something present, and it wasn't there before
 		  if (sensorVal < sensorThreshold && sensorStatus[i] == 0) {
@@ -87,7 +83,7 @@ void checkSensors() {
 		  Serial.println(sensorVal);
 
 		  // for debugging
-		  // moodReturned = int(random(0, 3));
+		  moodReturned = int(random(0, 3));
 		  }
 
 		  // If there's something missing, was it gone before?
@@ -100,7 +96,7 @@ void checkSensors() {
 		  	Serial.println(sensorVal);
 
 		  	// for debugging
-		  	// moodReturned = int(random(0, 3));
+		  	moodReturned = int(random(0, 3));
 		  }
 		}
 	}
@@ -130,16 +126,15 @@ void tallyRings() {
 			  	Serial.println(ringTotals[1]);
 			}
 		}
-		if (i > 7 && i < 11 && sensorStatus[i] == 1){
+		if (i > 7 && i < 11 sensorStatus[i] == 1){
 			ringTotals[2] ++;
 
 			if (millis() % 2000 == 0){
 			  	Serial.print("ring 2 total");
 			  	Serial.println(ringTotals[2]);
 			}
-		}
 
-		if (i > 10 && i < 14 && sensorStatus[i] == 1){
+		if (i > 10 && i < 14 sensorStatus[i] == 1){
 			ringTotals[3] ++;
 
 			if (millis() % 2000 == 0){
@@ -148,6 +143,7 @@ void tallyRings() {
 			}
 		}
 	}
+
 }
 
 int evaluateMood() {
@@ -171,37 +167,14 @@ int evaluateMood() {
 }
 
 void updateMusic(int tempMoodSelected){
-	int moodSelected = tempMoodSelected;
-	int trackToPlay;
+	int moodSelected = tempMoodSelected + 1;
 
 	if (moodSelected != moodPlaying) {
 
 		// pick a new track
 		// *** some bullshit code to pick a new track based on mood here
-		if (trackSelected == false){
-			switch (moodSelected) {
-			    case 0:
-			    	trackToPlay = random(1, 5);
-			    	trackSelected = true;
-			    	Serial.println("Case 0");
-			    	break;
-			    case 1:
-			    	trackToPlay = random(10, 14);
-			    	trackSelected = true;
-			    	Serial.println("Case 1");
-			    	break;
-		    	case 2:
-		    		trackToPlay = random(20,24);
-		    		trackSelected = true;
-		    		Serial.println("Case 2");
-		    		break;
-	    		case 3:
-	    			trackToPlay = random(30,34);
-	    			trackSelected = true;
-	    			Serial.println("Case 3");
-	    			break;
-			}
-		}
+		int trackToPlay = moodSelected;
+
 		// fade out the old one
 		if (volume < 240 && (millis() % FADE_RATE == 0)){
 			volume ++;
@@ -210,7 +183,6 @@ void updateMusic(int tempMoodSelected){
 			MP3player.stopTrack();
 			MP3player.playTrack(trackToPlay);
 			moodPlaying = moodSelected;
-			trackSelected = false;
 		}
 	}
 
