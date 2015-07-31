@@ -114,35 +114,35 @@ void tallyRings() {
 		if (i < 3 && sensorStatus[i] == 1){
 			ringTotals[0] ++;
 
-			if (millis() % 2000 == 0){
+			// if (millis() % 2000 == 0){
 			  	// Serial.print("ring 0 total");
 			  	// Serial.println(ringTotals[0]);
-			}
+			// }
 		}
 		if (i > 2 && i < 6 && sensorStatus[i] == 1){
 			ringTotals[1] ++;
 
-			if (millis() % 2000 == 0){
+			// if (millis() % 2000 == 0){
 			  	// Serial.print("ring 1 total");
 			  	// Serial.println(ringTotals[1]);
-			}
+			// }
 		}
 		if (i > 7 && i < 11 && sensorStatus[i] == 1){
 			ringTotals[2] ++;
 
-			if (millis() % 2000 == 0){
+			// if (millis() % 2000 == 0){
 			  	// Serial.print("ring 2 total");
 			  	// Serial.println(ringTotals[2]);
-			}
+			// }
 		}
 
 		if (i > 10 && i < 14 && sensorStatus[i] == 1){
 			ringTotals[3] ++;
 
-			if (millis() % 2000 == 0){
+			// if (millis() % 2000 == 0){
 			  	// Serial.print("ring 3 total");
 			  	// Serial.println(ringTotals[3]);
-			}
+			// }
 		}
 	}
 }
