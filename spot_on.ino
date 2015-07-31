@@ -43,6 +43,7 @@ unsigned int moodReturned;
 unsigned int sensorPlaying;
 unsigned int lastUpdated;
 
+
 void setup()
 {
   Serial.begin(9600);
@@ -55,10 +56,10 @@ void loop()
 {
 
  checkSensors();
- // tallyRings();
- // int moodReturned = evaluateMood();
+ tallyRings();
+ int moodReturned = evaluateMood();
  
- // updateMusic(moodReturned);
+ updateMusic(moodReturned);
 
 }
 
@@ -69,9 +70,9 @@ void checkSensors() {
 		for (int i=0; i < SENSOR_COUNT; i++){
 		  sensorVal = analogRead(sensorPins[i]);
 		  
-		  Serial.print(i);
-		  Serial.print( " : ");
-		  Serial.println(sensorVal);
+		  // Serial.print(i);
+		  // Serial.print( " : ");
+		  // Serial.println(sensorVal);
 
 		  // If there's something present, and it wasn't there before
 		  if (sensorVal < sensorThreshold && sensorStatus[i] == 0) {
@@ -126,15 +127,16 @@ void tallyRings() {
 			  	Serial.println(ringTotals[1]);
 			}
 		}
-		if (i > 7 && i < 11 sensorStatus[i] == 1){
+		if (i > 7 && i < 11 && sensorStatus[i] == 1){
 			ringTotals[2] ++;
 
 			if (millis() % 2000 == 0){
 			  	Serial.print("ring 2 total");
 			  	Serial.println(ringTotals[2]);
 			}
+		}
 
-		if (i > 10 && i < 14 sensorStatus[i] == 1){
+		if (i > 10 && i < 14 && sensorStatus[i] == 1){
 			ringTotals[3] ++;
 
 			if (millis() % 2000 == 0){
@@ -143,7 +145,6 @@ void tallyRings() {
 			}
 		}
 	}
-
 }
 
 int evaluateMood() {
@@ -167,14 +168,27 @@ int evaluateMood() {
 }
 
 void updateMusic(int tempMoodSelected){
-	int moodSelected = tempMoodSelected + 1;
+	int moodSelected = tempMoodSelected;
 
 	if (moodSelected != moodPlaying) {
 
 		// pick a new track
 		// *** some bullshit code to pick a new track based on mood here
-		int trackToPlay = moodSelected;
 
+		switch (moodSelected) {
+		    case 0:
+		    	trackToPlay = random(1, 5);
+		      break;
+		    case 1:
+		    	trackToPlay = random(10, 14);
+		    	break;
+	    	case 2:
+	    		trackToPlay = random(20,24);
+	    		break;
+    		case 3:
+    			trackToPlay = random(30,34);
+    			break;
+		}
 		// fade out the old one
 		if (volume < 240 && (millis() % FADE_RATE == 0)){
 			volume ++;
