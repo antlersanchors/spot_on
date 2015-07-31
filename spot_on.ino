@@ -57,7 +57,7 @@ void loop()
 
  checkSensors();
  tallyRings();
- int moodReturned = evaluateMood();
+ moodReturned = evaluateMood();
  
  updateMusic(moodReturned);
 
@@ -84,7 +84,7 @@ void checkSensors() {
 		  Serial.println(sensorVal);
 
 		  // for debugging
-		  moodReturned = int(random(0, 3));
+		  // moodReturned = int(random(0, 3));
 		  }
 
 		  // If there's something missing, was it gone before?
@@ -97,7 +97,7 @@ void checkSensors() {
 		  	Serial.println(sensorVal);
 
 		  	// for debugging
-		  	moodReturned = int(random(0, 3));
+		  	// moodReturned = int(random(0, 3));
 		  }
 		}
 	}
@@ -169,6 +169,7 @@ int evaluateMood() {
 
 void updateMusic(int tempMoodSelected){
 	int moodSelected = tempMoodSelected;
+	int trackToPlay;
 
 	if (moodSelected != moodPlaying) {
 
