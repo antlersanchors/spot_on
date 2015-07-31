@@ -88,7 +88,6 @@ void checkSensors() {
 		  Serial.println(sensorVal);
 
 		  // for debugging
-		  moodReturned = int(random(0, 3));
 		  }
 
 		  // If there's something missing, was it gone before?
@@ -101,7 +100,6 @@ void checkSensors() {
 		  	Serial.println(sensorVal);
 
 		  	// for debugging
-		  	moodReturned = int(random(0, 3));
 		  }
 		}
 	}
